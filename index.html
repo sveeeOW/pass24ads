@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Рекламная платформа PASS24.online</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --good: #166534;
+      --warn: #92400e;
+      --shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 20px 14px 36px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .title h1 {
+      margin: 0 0 6px;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+    .title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: .18s ease;
+      box-shadow: 0 1px 0 rgba(15,23,42,.02);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(15,23,42,.08); }
+    .btn.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn.soft {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: transparent;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(148,163,184,.18);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .controls {
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 12px;
+      align-items: end;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .field label {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    input[type="date"], input[type="number"], input[type="text"], input[type="url"], select, textarea {
+      width: 100%;
+      min-width: 0;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 0 12px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    textarea {
+      min-height: 118px;
+      padding: 10px 12px;
+      resize: vertical;
+    }
+    .inline-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0 12px;
+      background: #fff;
+    }
+    .inline-check label {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .muted-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .status {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .status strong { color: var(--text); }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .stat {
+      padding: 18px;
+    }
+    .stat .label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .stat .value {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .section {
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: middle;
+      font-size: 14px;
+    }
+    th {
+      background: #f8fafc;
+      color: var(--muted);
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    tr:last-child td { border-bottom: none; }
+    .mono { font-variant-numeric: tabular-nums; }
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 84px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid transparent;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #dbeafe;
+    }
+    .ghost-btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: transparent;
+      border-radius: 10px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .empty {
+      padding: 28px 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .impression-days {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .imp-day {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 10px 12px;
+    }
+    .imp-day .d {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .imp-day .v {
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.42);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 16px;
+      overflow: auto;
+      z-index: 50;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      width: min(1180px, 100%);
+      height: min(92vh, 980px);
+      max-height: min(92vh, 980px);
+      overflow: hidden;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 30px 70px rgba(15,23,42,.22);
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1fr);
+      min-height: 0;
+      margin: auto;
+    }
+    .modal-left {
+      border-right: 1px solid var(--line);
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      min-height: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    .modal-right {
+      min-height: 0;
+      overflow: auto;
+      padding: 18px;
+    }
+    .modal-head {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+    .modal-head h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .id-search {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .id-list {
+      min-height: 0;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      scrollbar-gutter: stable;
+    }
+    .id-item {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      cursor: pointer;
+      text-align: left;
+    }
+    .id-item.active {
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+    .id-item .small {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .full { grid-column: 1 / -1; }
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .help {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .footnote {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+    @media (max-width: 1020px) {
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .modal { grid-template-columns: 1fr; height: min(92vh, 980px); }
+      .modal-left { max-height: 36vh; }
+      .modal-right { max-height: 56vh; }
+    }
+    @media (max-width: 760px) {
+      .title h1 { font-size: 24px; }
+      .controls-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .actions { width: 100%; }
+      .actions .btn { flex: 1 1 auto; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script>
+    window.PASS24_CONFIG = {
+      apiPath: '/api/appmetrica',
+      metaApiPath: '/api/banner-meta',
+      autoRefreshMs: 30 * 60 * 1000,
+      bannerNames: {
+  "4": "Holmy Rehab",
+  "5": "Малаховка Life",
+  "6": "Mayrveda",
+  "7": "Holmy Rehab 2",
+  "8": "Mr.Doors",
+  "9": "Google Form",
+  "10": "High Life",
+  "11": "High Life 2",
+  "12": "Pride Home",
+  "13": "Pride Home 2",
+  "14": "Shift Home",
+  "15": "Shift Home 2",
+  "16": "High Life 3",
+  "17": "Баннер 17",
+  "18": "PASS24 Gifts 1",
+  "19": "PASS24 Gifts 2",
+  "20": "PASS24 Gifts 3",
+  "21": "PASS24 ads",
+  "22": "Свой капитал",
+  "23": "Свой капитал",
+  "24": "PASS24 Бюро пропусков",
+  "25": "PASS24 Бюро пропусков 2",
+  "26": "Mayrveda",
+  "27": "Газпромбанк Премиум",
+  "28": "PASS24 Складские комплексы",
+  "29": "Riga Multicar",
+  "30": "Покровские бани",
+  "31": "SANGENS",
+  "32": "SANGENS 2",
+  "33": "SL Events (ifhs)",
+  "34": "Help Button",
+  "35": "Gera Med",
+  "36": "Brutal Toys",
+  "37": "Brutal Toys Service",
+  "38": "Медфрендс",
+  "39": "TG PASS24",
+  "40": "Jet",
+  "41": "Медфрендс 2",
+  "42": "Zoognome",
+  "43": "Help Button 2",
+  "44": "Фонд \"Важные люди\"",
+  "45": "Станьте резидентом Сколково",
+  "46": "BrobroLab",
+  "47": "Сказочный свет",
+  "48": "Санорум",
+  "49": "PASS24 Referral",
+  "50": "Quartier d'Or",
+  "51": "Единый социальный оператор",
+  "52": "Expedition Rest",
+  "53": "Подсветка гирляндами",
+  "54": "PASS24 Referral 2",
+  "55": "Тестовый баннер",
+  "56": "Подари жизнь / Пансионат Измалково",
+  "57": "Подари жизнь",
+  "58": "Подари жизнь / Пансионат Измалково 2",
+  "59": "Партнёрский баннер 59",
+  "60": "Важная ёлка",
+  "61": "Жар птица (гостевой)",
+  "62": "Жар-птица (app)",
+  "63": "Экспедиция",
+  "64": "Palazzo de Agoy",
+  "65": "Жонглируем на добро",
+  "66": "Огниво",
+  "67": "PASS24.Market Travel",
+  "68": "Enjoy Drive",
+  "69": "Панарктика",
+  "70": "Авторские букеты",
+  "71": "Фасти",
+  "72": "Green Flow",
+  "73": "Green Flow 2",
+  "74": "Green Flow 3",
+  "75": "Carlson",
+  "76": "Фонд Открывая горизонты",
+  "77": "AP Interior Design",
+  "78": "Квартал Мейера 5",
+  "79": "Lacy bird",
+  "80": "Lacy bird",
+  "81": "Lacy bird",
+  "82": "Lacy bird",
+  "83": "ГЛАВСТРОЙ",
+  "84": "Watts Battery",
+  "85": "Экспедиция парк",
+  "86": "TargetAds",
+  "88": "Газпромбанк Премиум 2",
+  "89": "PASS24 ads 2",
+  "90": "Pool for users",
+  "91": "GazTormoz",
+  "92": "GazTormoz 2"
+},
+      bannerMeta: {
+  "4": {
+    "url": "https://holmy-rehab.ru/?utm_source=pass24/?LjN8KRwrd",
+    "start": null,
+    "end": "2024-08-14"
+  },
+  "5": {
+    "url": "https://malahovka-life.ru/?utm_source=pass24&utm_medium=mainbanner?LjN8KJDnD",
+    "start": null,
+    "end": "2024-08-13"
+  },
+  "6": {
+    "url": "https://mayrveda.ru/?utm_source=pass24/?LjN8JyQjf",
+    "start": "2024-06-17",
+    "end": null
+  },
+  "7": {
+    "url": "https://holmy-rehab.ru/?utm_source=banner/?LjN8KES1K",
+    "start": "2024-08-28",
+    "end": "2024-12-04"
+  },
+  "8": {
+    "url": "https://www.mrdoors.ru/catalog/?utm_source=pass24&utm_medium=banner&utm_campaign=application/?LjN8JtcN9",
+    "start": "2024-08-28",
+    "end": "2024-10-01"
+  },
+  "9": {
+    "url": "https://forms.gle/Pv62rQEHxfye6CsF6",
+    "start": "2024-11-05",
+    "end": "2024-12-11"
+  },
+  "10": {
+    "url": "https://highlife.ru/?utm_source=pass24&utm_medium=banner&utm%E2%80%A6",
+    "start": "2024-11-15",
+    "end": "2024-11-19"
+  },
+  "11": {
+    "url": "https://highlife.ru/?utm_source=pass24&utm_medium=banner&utm%E2%80%A6?erid=LjN8JtfR6",
+    "start": "2024-11-15",
+    "end": "2024-11-20"
+  },
+  "12": {
+    "url": "https://pride-home.ru/?utm_source=pass24&utm_medium=banner&utm_campaign=pass24_app?erid=LjN8Jv3UR",
+    "start": "2024-11-20",
+    "end": "2024-11-25"
+  },
+  "13": {
+    "url": "https://pride-home.ru/?utm_source=pass24&utm_medium=banner&utm_campaign=pass24_app?erid=LjN8JzKs6",
+    "start": "2024-12-01",
+    "end": "2024-12-05"
+  },
+  "14": {
+    "url": "https://shift-home.ru/?utm_source=pass24&utm_medium=banner&u%E2%80%A6?erid=LjN8KYv2s",
+    "start": "2024-11-25",
+    "end": "2024-12-01"
+  },
+  "15": {
+    "url": "https://shift-home.ru/?utm_source=pass24&utm_mediu...",
+    "start": "2024-12-05",
+    "end": "2024-12-10"
+  },
+  "16": {
+    "url": "https://highlife.ru/?utm_source=pass24&utm_medium=banner&utm%E2%80%A6?erid=LjN8JtfR6",
+    "start": "2024-12-10",
+    "end": "2024-12-15"
+  },
+  "17": {
+    "url": null,
+    "start": "2024-12-11",
+    "end": "2025-01-31"
+  },
+  "18": {
+    "url": "https://pass24refferal.bitrix24site.ru/gifts?utm_source=app&utm_content=banner1",
+    "start": "2025-02-03",
+    "end": null
+  },
+  "19": {
+    "url": "https://pass24refferal.bitrix24site.ru/gifts?utm_source=app&utm_content=banner2",
+    "start": "2025-02-03",
+    "end": null
+  },
+  "20": {
+    "url": "https://pass24refferal.bitrix24site.ru/gifts?utm_source=app&utm_content=banner3",
+    "start": "2025-02-03",
+    "end": null
+  },
+  "21": {
+    "url": "https://pass24refferal.bitrix24site.ru/crm_form_v47vm/?utm_source=app&utm_term=banner",
+    "start": "2025-03-11",
+    "end": "2025-12-09"
+  },
+  "22": {
+    "url": "https://svoi.capital/?utm_source=site_link&utm_medium=reffer&utm_campaign=svoi.capital",
+    "start": "2025-03-19",
+    "end": null
+  },
+  "23": {
+    "url": "https://t.me/Svoy_capital_bot?start=link_3T25NA40Cl&erid=2W5zFGTNT1J",
+    "start": "2025-03-25",
+    "end": "2025-04-24"
+  },
+  "24": {
+    "url": "https://pass24online.ru/products/mobil'noe-byuro-propuskov",
+    "start": "2025-04-01",
+    "end": "2025-04-04"
+  },
+  "25": {
+    "url": "https://pass24online.ru/products/mobil'noe-byuro-propuskov",
+    "start": "2025-04-01",
+    "end": "2025-04-04"
+  },
+  "26": {
+    "url": "https://mayrveda.ru/?utm_source=pass24?erid=LjN8JyQjf",
+    "start": "2025-04-14",
+    "end": "2025-10-13"
+  },
+  "27": {
+    "url": "https://www.gazprombank.ru/premium/?utm_source=pass24&utm_medium=banner&utm_campaign=debit_card_premium_april25%7Cdebit_card_premium%7Cd:dkm%7Cpn:debit_card_premium%7Crt:app%7Crk:coverage%7Cag:gpb&utm_content=1155x270?erid=2W5zFGzZYy6",
+    "start": "2025-04-21",
+    "end": "2025-06-21"
+  },
+  "28": {
+    "url": "https://pass24online.ru/reshenie/skadskie-kompleksy?utm_source=pass24app",
+    "start": "2025-04-21",
+    "end": null
+  },
+  "29": {
+    "url": "https://rigamulticar.ru/?utm_source=app&utm_medium=cpa&utm_campaign=app?erid=2W5zFJsyWQx",
+    "start": "2025-04-25",
+    "end": "2025-05-29"
+  },
+  "30": {
+    "url": "https://pokrovskie-bani.ru/?utm_source=pass&utm_medium=banner&utm_campaign=pass&erid=2W5zFGNchhi",
+    "start": "2025-05-12",
+    "end": "2025-06-12"
+  },
+  "31": {
+    "url": "https://sangens.com/ru/seriesl/?utm_source=pass24&utm_medium=paid&utm_campaign=bannermain&utm_content=seriesl&utm_term=promocode&clckid=2211d878&erid=2W5zFHAKCqv",
+    "start": "2025-05-23",
+    "end": "2025-06-24"
+  },
+  "32": {
+    "url": "https://sangens.com/ru/seriesw/?utm_source=pass24&utm_medium=paid&utm_campaign=bannermain&utm_content=seriesw&utm_term=promocode&clckid=34615519&erid=2W5zFGt1Lk8",
+    "start": "2025-05-23",
+    "end": "2025-06-24"
+  },
+  "33": {
+    "url": "https://sl-event.ru/?utm_campaign=pass24online&erid=2W5zFH7wW5v",
+    "start": "2025-06-19",
+    "end": "2025-07-07"
+  },
+  "34": {
+    "url": "https://help-button.ru/?utm_source=yandex&utm_medium=banner&utm_campaign=ru1&erid=2W5zFJX3yL4",
+    "start": "2025-06-26",
+    "end": "2025-07-27"
+  },
+  "35": {
+    "url": "https://gera-med.clinic/?erid=2W5zFJ1ce8Y",
+    "start": "2025-07-02",
+    "end": "2025-07-31"
+  },
+  "36": {
+    "url": "https://brutal-toys.ru/?utm_source=pass24&utm_medium=tehnika&utm_campaign=maliybanner&erid=2W5zFJbj2jA",
+    "start": "2025-07-09",
+    "end": "2025-07-29"
+  },
+  "37": {
+    "url": "https://brutal-toys.ru/service-center/?utm_source=pass24&utm_medium=remont&utm_campaign=maliybanner&erid=2W5zFJq4vGG",
+    "start": "2025-07-29",
+    "end": "2025-08-11"
+  },
+  "38": {
+    "url": "https://pass24refferal.bitrix24site.ru/crm_form_v47vm/?utm_source=app&utm_term=banner",
+    "start": "2025-08-05",
+    "end": "2025-08-14"
+  },
+  "39": {
+    "url": "https://t.me/pass24online",
+    "start": "2025-08-26",
+    "end": "2025-10-02"
+  },
+  "40": {
+    "url": "https://jet-arena.ru/?erid=2W5zFJ1qSwa",
+    "start": "2025-10-01",
+    "end": "2025-10-31"
+  },
+  "41": {
+    "url": "https://mfclinic.ru/?ysclid=mg7ou1xa0110282026/?erid=2W5zFJUXE1n",
+    "start": "2025-10-01",
+    "end": "2025-10-31"
+  },
+  "42": {
+    "url": "https://zoognome.ru/events/check-up/?erid=2W5zFGq35bE",
+    "start": "2025-10-01",
+    "end": "2025-10-31"
+  },
+  "43": {
+    "url": "https://help-button.ru/?utm_source=yandex&utm_medium=banner&utm_campaign=ru1&erid=2W5zFJX3yL4",
+    "start": "2025-10-03",
+    "end": "2025-10-21"
+  },
+  "44": {
+    "url": "https://fond-vl.ru/campaign/krjukov-sergej/?utm_source=8media-agency&utm_medium=pass24&utm_campaign=app",
+    "start": "2025-10-08",
+    "end": "2025-10-31"
+  },
+  "45": {
+    "url": "https://pass24refferal.bitrix24site.ru/crm_form_5iljv/?erid=2W5zFGekD52",
+    "start": "2025-10-10",
+    "end": "2025-12-30"
+  },
+  "46": {
+    "url": "https://t.me/ask_brobrolab_bot?erid=2W5zFHDDsng",
+    "start": "2025-10-14",
+    "end": "2025-11-14"
+  },
+  "47": {
+    "url": "https://xn--80aejgkdxhxgn8cxc.xn--p1ai/?utm_source=pass24&utm_medium=banner&utm_campaign=pass24banner/?erid=2W5zFH1b5Pe",
+    "start": "2025-10-16",
+    "end": "2025-11-16"
+  },
+  "48": {
+    "url": "https://wildberries.ru/catalog/0/search.aspx?search=WW209404&utm_source=pass?erid=2W5zFJ8qYYG",
+    "start": "2025-11-12",
+    "end": "2025-12-12"
+  },
+  "49": {
+    "url": "https://pass24refferal.bitrix24site.ru/crm_form_v47vm/?utm_source=app&utm_term=banner",
+    "start": "2025-10-30",
+    "end": "2025-10-31"
+  },
+  "50": {
+    "url": "https://quartierdor.com/?utm_source=direct&utm_medium=referral&utm_campaign=media-8?erid=2W5zFK3weqW",
+    "start": "2025-11-07",
+    "end": "2025-11-30"
+  },
+  "51": {
+    "url": "https://eso.ru/helpcard/8b1c3191-f31d-4c9e-b311-1746ee994cc2?utm_source=banner&utm_medium=pass24&utm_campaign=milana",
+    "start": "2025-11-13",
+    "end": "2025-11-19"
+  },
+  "52": {
+    "url": "https://expedition.rest/",
+    "start": "2025-11-20",
+    "end": "2025-11-28"
+  },
+  "53": {
+    "url": "https://podsvetka-girlyandami.ru/?utm_source=banner_pdco&utm_medium=cpc&utm_campaign=mobile&erid=2W5zFHSuwb6",
+    "start": "2025-12-04",
+    "end": "2026-01-05"
+  },
+  "54": {
+    "url": "https://pass24refferal.bitrix24site.ru/crm_form_v47vm/?utm_source=app&utm_term=banner",
+    "start": "2025-12-04",
+    "end": "2025-12-05"
+  },
+  "55": {
+    "url": "https://mng.pass24online.ru/adm_manager/fdghfg",
+    "start": null,
+    "end": null
+  },
+  "56": {
+    "url": "https://podari-zhizn.ru/ru/what-we-do/izmalkovo?utm_source=link&utm_medium=banner&utm_campaign=izmalkovo&utm_content=fandr",
+    "start": "2025-12-10",
+    "end": "2025-12-18"
+  },
+  "57": {
+    "url": "https://podari-zhizn.ru/ru/what-we-do/izmalkovo?utm_source=link&utm_medium=banner&utm_campaign=izmalkovo&utm_content=fandr",
+    "start": "2025-12-18",
+    "end": "2025-12-26"
+  },
+  "58": {
+    "url": "https://podari-zhizn.ru/ru/what-we-do/izmalkovo?utm_source=link&utm_medium=banner&utm_campaign=izmalkovo&utm_content=fandr",
+    "start": "2025-12-26",
+    "end": "2026-01-03"
+  },
+  "59": {
+    "url": "https://clck.ru/3QcFKD",
+    "start": "2025-12-11",
+    "end": "2025-12-11"
+  },
+  "60": {
+    "url": "https://fond-vl.ru/projects/new-year-2026/?utm_source=pass24&utm_medium=new-year-2026&utm_campaign=new-year-2026",
+    "start": "2025-12-23",
+    "end": "2026-01-16"
+  },
+  "61": {
+    "url": "https://pass24online.ru/showpass24",
+    "start": "2025-12-23",
+    "end": "2026-05-01"
+  },
+  "62": {
+    "url": "https://newriga.jarpticabani.ru/?utm_source=link&utm_medium=pass24&erid=%202W5zFFujG6t",
+    "start": "2025-12-25",
+    "end": "2026-05-07"
+  },
+  "63": {
+    "url": "http://utka.expedition.ru/?utm_source=rest&utm_medium=cmc&utm_campaign=expedition",
+    "start": "2026-01-12",
+    "end": "2026-01-19"
+  },
+  "64": {
+    "url": "https://palazzo-de-agoy.ru/pass24online/?erid=2W5zFHc3Km2",
+    "start": "2026-01-16",
+    "end": "2026-04-17"
+  },
+  "65": {
+    "url": "https://khromov.timepad.ru/event/3815396/",
+    "start": "2026-02-10",
+    "end": "2026-02-16"
+  },
+  "66": {
+    "url": "https://shopwindow.pass24online.ru/",
+    "start": "2026-02-11",
+    "end": "2026-06-02"
+  },
+  "67": {
+    "url": "https://pass24market.ru/travel",
+    "start": "2026-02-24",
+    "end": "2026-03-31"
+  },
+  "68": {
+    "url": "https://pass24market.ru/travel",
+    "start": "2026-02-24",
+    "end": "2026-03-13"
+  },
+  "69": {
+    "url": "https://panarcticstar.ru/?utm_source=app&utm_medium=promo&utm_campaign=pass24",
+    "start": "2026-04-13",
+    "end": "2026-06-03"
+  },
+  "70": {
+    "url": "https://lacybird.ru/catalog/8-marta/?utm_source=pass24",
+    "start": "2026-03-03",
+    "end": "2026-04-03"
+  },
+  "71": {
+    "url": "https://fasti.me/?utm_source=pass24online&utm_medium=banner&erid=2W5zFHDt4uP",
+    "start": "2026-03-05",
+    "end": "2026-03-13"
+  },
+  "72": {
+    "url": "https://greenflow.ru/special-offers/detyam-do-13-let-besplatno-prozhivanie-i-zavtraki/?utm_source=opening_barrier&utm_medium=app&utm_campaign=detyam-do-13-let-besplatno-prozhivanie-i-zavtraki&erid=2W5zFJNHiDP",
+    "start": "2026-03-11",
+    "end": "2026-03-19"
+  },
+  "73": {
+    "url": "https://greenflow.ru/wellness-programs/?utm_source=opening_barrier&utm_medium=app&utm_campaign=wellness-programs&erid=2W5zFG3jL6d",
+    "start": "2026-03-19",
+    "end": "2026-03-27"
+  },
+  "74": {
+    "url": "https://greenflow.ru/wellness-programs/?utm_source=opening_barrier&utm_medium=app&utm_campaign=wellness-programs&erid=2W5zFG3jL6d",
+    "start": "2026-03-27",
+    "end": "2026-04-06"
+  },
+  "75": {
+    "url": "https://carloson.ru/car?utm_source=app_propusk&utm_medium=banner&utm_campaign=inapp&erid=2W5zFJDLmeR",
+    "start": "2026-03-20",
+    "end": "2026-04-21"
+  },
+  "76": {
+    "url": "https://ogfond.ru/ustraivaisya?utm_source=prilozhenie&utm_medium=banner&utm_campaign=ustraivaisya&utm_term=doma&erid=2W5zFGNMtmF",
+    "start": "2026-04-07",
+    "end": "2026-04-22"
+  },
+  "77": {
+    "url": "https://ap-interior.design/?utm_source=pass24&utm_medium=banner&utm_campaign=interior_design&utm_content=banner1&erid=2W5zFGLqDnH",
+    "start": "2026-04-14",
+    "end": "2026-05-15"
+  },
+  "78": {
+    "url": "https://gmkvartal.ru/?utm_source=pass24online.ru%2F&utm_medium=banner&utm_campaign=pass24&erid=2W5zFG7xCmf",
+    "start": "2026-04-15",
+    "end": "2026-04-25"
+  },
+  "79": {
+    "url": "https://lacybird.ru/?utm_source=pass24&erid=2W5zFHjBgnd",
+    "start": "2026-04-24",
+    "end": "2026-05-01"
+  },
+  "80": {
+    "url": "https://lacybird.ru/?utm_source=pass24&erid=2W5zFFxvDkV",
+    "start": "2026-05-04",
+    "end": "2026-05-10"
+  },
+  "81": {
+    "url": "https://lacybird.ru/?utm_source=pass24&erid=2W5zFG7p9SZ",
+    "start": "2026-05-10",
+    "end": "2026-05-17"
+  },
+  "82": {
+    "url": "https://lacybird.ru/?utm_source=pass24&erid=2W5zFGCG7Hb",
+    "start": "2026-05-17",
+    "end": "2026-05-25"
+  },
+  "83": {
+    "url": "https://beregovoy-kvartal.ru/flats/?utm_source=pass24&utm_medium=cpd&utm_campaign=banner&utm_content=565m2_may2026&erid=%202W5zFGT5KSq",
+    "start": "2026-05-07",
+    "end": "2026-05-23"
+  },
+  "84": {
+    "url": "https://wattsbattery.ru/shop?utm_source=pass24&utm_medium=banner&utm_campaign=cottage_backup&erid=2W5zFJeZvGy",
+    "start": "2026-05-11",
+    "end": "2026-06-13"
+  },
+  "85": {
+    "url": "https://expeditionpark.ru/razvlecheniya/gastro-uzhin-na-vozdushnom-share/?utm_source=pass24&erid=2W5zFGgF8gq",
+    "start": "2026-05-13",
+    "end": "2026-05-17"
+  },
+  "86": {
+    "url": "https://eye.targetads.io/view/click?pid=12787&cn=31110&pl=82618&erid=2W5zFH9Jk8y",
+    "start": "2026-05-18",
+    "end": "2026-06-19"
+  },
+  "88": {
+    "url": "https://www.gazprombank.ru/premium/?utm_source=pass24&utm_medium=banner&utm_campaign=debit_card_premium_april25%7Cdebit_card_premium%7Cd:dkm%7Cpn:debit_card_premium%7Crt:app%7Crk:coverage%7Cag:gpb&utm_content=800x466?erid=2W5zFJDixVe",
+    "start": "2026-05-19",
+    "end": "2026-05-20"
+  },
+  "89": {
+    "url": "https://pass24refferal.bitrix24site.ru/crm_form_v47vm/?utm_source=app&utm_term=banner",
+    "start": "2026-05-19",
+    "end": "2026-05-20"
+  },
+  "90": {
+    "url": "https://pass24online.ru/poolforusers",
+    "start": "2026-05-21",
+    "end": "2026-05-22"
+  },
+  "91": {
+    "url": "http://t.me/gaztormoz",
+    "start": "2026-05-21",
+    "end": "2026-05-25"
+  },
+  "92": {
+    "url": "http://t.me/gaztormoz",
+    "start": "2026-05-21",
+    "end": "2026-05-25"
+  }
+},
+      extraImpressions: {
+  "2026-01": {
+    "62": {
+      "impressions": 200891,
+      "clicks": 1246,
+      "users": 1246
+    }
+  },
+  "2026-03": {
+    "62": {
+      "impressions": 131561,
+      "clicks": 833,
+      "users": 833
+    },
+    "69": {
+      "impressions": 108976,
+      "clicks": 774,
+      "users": 774
+    }
+  }
+}
+    };
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="title">
+        <h1>Рекламная платформа PASS24.online</h1>
+        <p>Сводка по Banner ID за выбранный период, со сроками размещения и партнёрскими ссылками.</p>
+      </div>
+      <div class="actions">
+        <button class="btn soft" id="todayBtn">Сегодня</button>
+        <button class="btn" id="openEditorBtn">Редактировать баннеры</button>
+        <button class="btn primary" id="refreshBtn">Обновить сейчас</button>
+      </div>
+    </div>
+
+    <div class="card controls">
+      <div class="controls-grid">
+        <div class="field" style="grid-column: span 2;">
+          <label for="dateFrom">Дата с</label>
+          <input type="date" id="dateFrom" />
+        </div>
+        <div class="field" style="grid-column: span 2;">
+          <label for="dateTo">Дата по</label>
+          <input type="date" id="dateTo" />
+        </div>
+        <div class="field" style="grid-column: span 2;">
+          <label for="yearSelect">Год</label>
+          <select id="yearSelect"></select>
+        </div>
+        <div class="field" style="grid-column: span 2;">
+          <label for="monthSelect">Месяц</label>
+          <select id="monthSelect"></select>
+        </div>
+        <div class="field" style="grid-column: span 2;">
+          <label>&nbsp;</label>
+          <button class="btn" id="showMonthBtn">Показать месяц</button>
+        </div>
+        <div class="field" style="grid-column: span 2;">
+          <label>&nbsp;</label>
+          <div class="inline-check">
+            <label><input type="checkbox" id="includeExtra" /> Включая дополнительные показы</label>
+          </div>
+        </div>
+      </div>
+      <div class="muted-note">Дополнительные показы есть только для января и марта 2026 и добавляются, если выбран полный месяц.</div>
+      <div class="status" id="statusLine">Загрузка…</div>
+    </div>
+
+    <div class="stats">
+      <div class="card stat">
+        <div class="label">Баннеры</div>
+        <div class="value mono" id="kpiBanners">0</div>
+      </div>
+      <div class="card stat">
+        <div class="label">Клики</div>
+        <div class="value mono" id="kpiClicks">0</div>
+      </div>
+      <div class="card stat">
+        <div class="label">Пользователи</div>
+        <div class="value mono" id="kpiUsers">0</div>
+      </div>
+      <div class="card stat">
+        <div class="label">Показы</div>
+        <div class="value mono" id="kpiImpressions">0</div>
+      </div>
+    </div>
+
+    <div class="card section">
+      <div class="section-head">
+        <h2>За выбранный период</h2>
+        <div class="chip" id="rangeChip">—</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 90px;">ID</th>
+              <th>Баннер</th>
+              <th style="width: 190px;">Период размещения</th>
+              <th style="width: 110px;">Ссылка</th>
+              <th style="width: 110px;">Клики</th>
+              <th style="width: 130px;">Пользователи</th>
+              <th style="width: 92px;">Правка</th>
+            </tr>
+          </thead>
+          <tbody id="bannerTableBody"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="bannerEmpty" style="display:none;">За этот период данных по баннерам нет.</div>
+    </div>
+
+    <div class="card section">
+      <div class="section-head">
+        <h2>Показы за период</h2>
+        <div class="chip"><span id="impRangeLabel">—</span></div>
+      </div>
+      <div class="footnote" id="extraNote"></div>
+      <div class="impression-days" id="impressionDays"></div>
+      <div class="empty" id="impressionEmpty" style="display:none;">За этот период данных по показам нет.</div>
+    </div>
+  </div>
+
+  <div class="overlay" id="editorOverlay">
+    <div class="modal">
+      <div class="modal-left">
+        <div class="modal-head">
+          <h3>Редактор баннеров</h3>
+          <button class="btn" id="closeEditorBtn">Закрыть</button>
+        </div>
+        <div class="id-search">
+          <input type="text" id="editorSearch" placeholder="Поиск по ID или названию" />
+        </div>
+        <div class="id-list" id="editorIdList"></div>
+      </div>
+      <div class="modal-right">
+        <div class="form-grid">
+          <div class="field">
+            <label for="editId">ID</label>
+            <input type="number" id="editId" min="1" step="1" />
+          </div>
+          <div class="field">
+            <label for="editName">Название</label>
+            <input type="text" id="editName" placeholder="Например, Lacy bird" />
+          </div>
+          <div class="field">
+            <label for="editStart">Начало размещения</label>
+            <input type="date" id="editStart" />
+          </div>
+          <div class="field">
+            <label for="editEnd">Конец размещения</label>
+            <input type="date" id="editEnd" />
+          </div>
+          <div class="field full">
+            <label for="editUrl">Ссылка партнёра</label>
+            <input type="url" id="editUrl" placeholder="https://..." />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn primary" id="saveEditBtn">Сохранить</button>
+          <button class="btn" id="deleteOverrideBtn">Удалить локальную правку</button>
+          <button class="btn" id="newEntryBtn">Новая запись</button>
+          <button class="btn" id="exportOverridesBtn">Экспорт правок</button>
+          <label class="btn" for="importOverridesInput">Импорт правок</label>
+          <input type="file" id="importOverridesInput" accept="application/json" style="display:none;" />
+        </div>
+
+        <div class="help">
+          Правки сохраняются в этом браузере и сразу попадают в дашборд. Можно изменять названия, даты размещения и ссылки без моего участия.
+          Для переноса правок на другое устройство используйте экспорт/импорт JSON.
+        </div>
+        <div class="help" id="editorInfo">Выберите ID слева или введите новый ID вручную.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'pass24.bannerOverrides.v1';
+    const cfg = window.PASS24_CONFIG || {};
+    const MONTH_NAMES = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+
+    const els = {
+      dateFrom: document.getElementById('dateFrom'),
+      dateTo: document.getElementById('dateTo'),
+      yearSelect: document.getElementById('yearSelect'),
+      monthSelect: document.getElementById('monthSelect'),
+      showMonthBtn: document.getElementById('showMonthBtn'),
+      todayBtn: document.getElementById('todayBtn'),
+      refreshBtn: document.getElementById('refreshBtn'),
+      includeExtra: document.getElementById('includeExtra'),
+      statusLine: document.getElementById('statusLine'),
+      rangeChip: document.getElementById('rangeChip'),
+      impRangeLabel: document.getElementById('impRangeLabel'),
+      bannerTableBody: document.getElementById('bannerTableBody'),
+      bannerEmpty: document.getElementById('bannerEmpty'),
+      impressionDays: document.getElementById('impressionDays'),
+      impressionEmpty: document.getElementById('impressionEmpty'),
+      extraNote: document.getElementById('extraNote'),
+      kpiBanners: document.getElementById('kpiBanners'),
+      kpiClicks: document.getElementById('kpiClicks'),
+      kpiUsers: document.getElementById('kpiUsers'),
+      kpiImpressions: document.getElementById('kpiImpressions'),
+      openEditorBtn: document.getElementById('openEditorBtn'),
+      editorOverlay: document.getElementById('editorOverlay'),
+      closeEditorBtn: document.getElementById('closeEditorBtn'),
+      editorSearch: document.getElementById('editorSearch'),
+      editorIdList: document.getElementById('editorIdList'),
+      editId: document.getElementById('editId'),
+      editName: document.getElementById('editName'),
+      editStart: document.getElementById('editStart'),
+      editEnd: document.getElementById('editEnd'),
+      editUrl: document.getElementById('editUrl'),
+      saveEditBtn: document.getElementById('saveEditBtn'),
+      deleteOverrideBtn: document.getElementById('deleteOverrideBtn'),
+      newEntryBtn: document.getElementById('newEntryBtn'),
+      exportOverridesBtn: document.getElementById('exportOverridesBtn'),
+      importOverridesInput: document.getElementById('importOverridesInput'),
+      editorInfo: document.getElementById('editorInfo'),
+    };
+
+    let lastPayload = { bannerDaily: [], impressionsDaily: [], source: 'unknown' };
+    let editorCurrentId = null;
+
+    function todayLocal() {
+      const d = new Date();
+      return formatDateInput(d.getFullYear(), d.getMonth() + 1, d.getDate());
+    }
+    function formatDateInput(y, m, d) {
+      return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    }
+    function formatDateRu(iso) {
+      if (!iso) return '—';
+      const m = String(iso).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (!m) return iso;
+      return `${m[3]}.${m[2]}.${m[1]}`;
+    }
+    function humanNumber(num) {
+      return new Intl.NumberFormat('ru-RU').format(Number(num || 0));
+    }
+    function escapeHtml(text) {
+      return String(text ?? '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#39;');
+    }
+    let overridesCache = { names: {}, meta: {} };
+    let overridesMode = 'local';
+    let overridesStatus = 'Локальные правки в этом браузере.';
+
+    function normalizeOverrides(obj) {
+      const base = { names: {}, meta: {} };
+      if (!obj || typeof obj !== 'object') return base;
+      const names = obj.names && typeof obj.names === 'object' ? obj.names : {};
+      const meta = obj.meta && typeof obj.meta === 'object' ? obj.meta : {};
+      base.names = Object.fromEntries(Object.entries(names).map(([k, v]) => [String(k), String(v ?? '').trim()]).filter(([, v]) => v));
+      base.meta = Object.fromEntries(Object.entries(meta).map(([k, v]) => {
+        const row = v && typeof v === 'object' ? v : {};
+        return [String(k), {
+          url: row.url ? String(row.url).trim() : null,
+          start: row.start ? String(row.start).trim() : null,
+          end: row.end ? String(row.end).trim() : null,
+        }];
+      }));
+      return base;
+    }
+    function readLocalOverrides() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return normalizeOverrides(raw ? JSON.parse(raw) : {});
+      } catch (e) {
+        return { names: {}, meta: {} };
+      }
+    }
+    function writeLocalOverrides(obj) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeOverrides(obj), null, 2));
+    }
+    async function loadOverrides() {
+      try {
+        const res = await fetch(`${cfg.metaApiPath}?_=${Date.now()}`, { cache: 'no-store' });
+        const payload = await res.json();
+        if (!res.ok) throw new Error(payload?.message || `HTTP ${res.status}`);
+        if (payload && payload.ok && payload.mode === 'shared') {
+          overridesCache = normalizeOverrides(payload.overrides);
+          overridesMode = 'shared';
+          overridesStatus = 'Правки сохраняются для всех пользователей в дашборде.';
+          writeLocalOverrides(overridesCache);
+          return;
+        }
+        const local = readLocalOverrides();
+        overridesCache = local;
+        overridesMode = 'local';
+        overridesStatus = payload?.storageError
+          ? `Общее сохранение недоступно: ${payload.storageError}. Используются локальные правки в этом браузере.`
+          : 'Используются локальные правки в этом браузере.';
+      } catch (e) {
+        overridesCache = readLocalOverrides();
+        overridesMode = 'local';
+        overridesStatus = `Не удалось подключить общее сохранение: ${e.message}. Используются локальные правки в этом браузере.`;
+      }
+    }
+    async function saveOverridePayload(payload) {
+      try {
+        const res = await fetch(cfg.metaApiPath, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload),
+          cache: 'no-store'
+        });
+        const json = await res.json();
+        if (!res.ok || !json?.ok || json.mode !== 'shared') {
+          throw new Error(json?.storageError || json?.message || `HTTP ${res.status}`);
+        }
+        overridesCache = normalizeOverrides(json.overrides);
+        overridesMode = 'shared';
+        overridesStatus = 'Правки сохранены в общем дашборде и доступны всем пользователям.';
+        writeLocalOverrides(overridesCache);
+        return { ok: true };
+      } catch (e) {
+        return { ok: false, error: e.message };
+      }
+    }
+    function getActiveOverrides() {
+      return overridesCache || { names: {}, meta: {} };
+    }
+    function getMergedNames() {
+      const overrides = getActiveOverrides();
+      return Object.assign({}, cfg.bannerNames || {}, overrides.names || {});
+    }
+    function getMergedMeta() {
+      const overrides = getActiveOverrides();
+      return Object.assign({}, cfg.bannerMeta || {}, overrides.meta || {});
+    }
+    function getAllKnownIds() {
+      const ids = new Set();
+      Object.keys(cfg.bannerNames || {}).forEach((id) => ids.add(String(id)));
+      Object.keys(cfg.bannerMeta || {}).forEach((id) => ids.add(String(id)));
+      Object.keys((getActiveOverrides().names || {})).forEach((id) => ids.add(String(id)));
+      Object.keys((getActiveOverrides().meta || {})).forEach((id) => ids.add(String(id)));
+      (lastPayload.bannerDaily || []).forEach((r) => ids.add(String(r.id)));
+      return Array.from(ids).filter(Boolean).sort((a,b)=>Number(a)-Number(b));
+    }
+    function inferredName(id) {
+      const meta = getMergedMeta()[String(id)] || {};
+      const url = meta.url || '';
+      try {
+        const u = new URL(url);
+        const host = u.hostname.replace(/^www\./,'');
+        return host.split('.')[0].replace(/[-_]/g,' ');
+      } catch (_) {
+        return `ID ${id}`;
+      }
+    }
+    function monthRange(year, month) {
+      const last = new Date(year, month, 0).getDate();
+      return {
+        date1: formatDateInput(year, month, 1),
+        date2: formatDateInput(year, month, last),
+      };
+    }
+    function sameDate(a,b) {
+      return String(a||'') === String(b||'');
+    }
+    function getSelectedRange() {
+      return { date1: els.dateFrom.value, date2: els.dateTo.value };
+    }
+    function setRange(date1, date2) {
+      els.dateFrom.value = date1;
+      els.dateTo.value = date2;
+      els.rangeChip.textContent = `${formatDateRu(date1)} — ${formatDateRu(date2)}`;
+      els.impRangeLabel.textContent = `${formatDateRu(date1)} — ${formatDateRu(date2)}`;
+    }
+    function fullMonthCovered(date1, date2, ym) {
+      const [y,m] = ym.split('-').map(Number);
+      const {date1: monthStart, date2: monthEnd} = monthRange(y,m);
+      return date1 <= monthStart && date2 >= monthEnd;
+    }
+    function applyExtra(rows, impressions, date1, date2) {
+      const extras = cfg.extraImpressions || {};
+      if (!els.includeExtra.checked) {
+        return { rows, impressions, note: 'Дополнительные показы выключены.' };
+      }
+      const rowMap = new Map(rows.map((r) => [String(r.id), Object.assign({}, r)]));
+      let totalExtraImpressions = 0;
+      let appliedMonths = [];
+      Object.entries(extras).forEach(([ym, monthData]) => {
+        if (!fullMonthCovered(date1, date2, ym)) return;
+        appliedMonths.push(ym);
+        Object.entries(monthData || {}).forEach(([id, metrics]) => {
+          totalExtraImpressions += Number(metrics.impressions || 0);
+          if (!rowMap.has(String(id))) {
+            rowMap.set(String(id), { id: Number(id), clicks: 0, users: 0 });
+          }
+          rowMap.get(String(id)).clicks += Number(metrics.clicks || 0);
+          rowMap.get(String(id)).users += Number(metrics.users || 0);
+        });
+      });
+      const note = appliedMonths.length
+        ? `Доп. данные применены для: ${appliedMonths.join(', ')}.`
+        : 'Полный месяц с доп. данными не выбран.';
+      return {
+        rows: Array.from(rowMap.values()),
+        impressions: impressions + totalExtraImpressions,
+        note
+      };
+    }
+    async function fetchData() {
+      const { date1, date2 } = getSelectedRange();
+      if (!date1 || !date2) return;
+      els.statusLine.innerHTML = 'Загрузка данных…';
+      const ts = Date.now();
+      const url = `${cfg.apiPath}?date1=${encodeURIComponent(date1)}&date2=${encodeURIComponent(date2)}&_=${ts}`;
+      try {
+        const res = await fetch(url, { cache: 'no-store' });
+        const payload = await res.json();
+        if (!res.ok) throw new Error(payload?.message || `HTTP ${res.status}`);
+        lastPayload = payload;
+        render();
+        const source = payload.source === 'live' ? 'live API' : 'локальный fallback';
+        let status = `Источник: <strong>${source}</strong>`;
+        if (payload.liveError) status += ` · Live API недоступен: ${escapeHtml(payload.liveError)}`;
+        if (payload.reason) status += ` · ${escapeHtml(payload.reason)}`;
+        els.statusLine.innerHTML = status;
+      } catch (error) {
+        lastPayload = { bannerDaily: [], impressionsDaily: [], source: 'error' };
+        render();
+        els.statusLine.innerHTML = `Ошибка загрузки: <strong>${escapeHtml(error.message)}</strong>`;
+      }
+    }
+    function render() {
+      const { date1, date2 } = getSelectedRange();
+      const mergedNames = getMergedNames();
+      const mergedMeta = getMergedMeta();
+
+      const filteredBannerDaily = (lastPayload.bannerDaily || []).filter((r) => r.date >= date1 && r.date <= date2 && Number(r.id) !== 7);
+      const bannerMap = new Map();
+      filteredBannerDaily.forEach((row) => {
+        const key = String(row.id);
+        if (!bannerMap.has(key)) bannerMap.set(key, { id: Number(row.id), clicks: 0, users: 0 });
+        const item = bannerMap.get(key);
+        item.clicks += Number(row.clicks || 0);
+        item.users += Number(row.users || 0);
+      });
+      let bannerRows = Array.from(bannerMap.values());
+      const filteredImpressions = (lastPayload.impressionsDaily || []).filter((r) => r.date >= date1 && r.date <= date2);
+      const impressionTotalBase = filteredImpressions.reduce((sum, r) => sum + Number(r.impressions || 0), 0);
+
+      const extraApplied = applyExtra(bannerRows, impressionTotalBase, date1, date2);
+      bannerRows = extraApplied.rows.sort((a,b)=> (b.clicks - a.clicks) || (b.users - a.users) || (a.id - b.id));
+
+      els.kpiBanners.textContent = humanNumber(bannerRows.length);
+      els.kpiClicks.textContent = humanNumber(bannerRows.reduce((s,r)=>s+Number(r.clicks||0),0));
+      els.kpiUsers.textContent = humanNumber(bannerRows.reduce((s,r)=>s+Number(r.users||0),0));
+      els.kpiImpressions.textContent = humanNumber(extraApplied.impressions);
+      els.rangeChip.textContent = `${formatDateRu(date1)} — ${formatDateRu(date2)}`;
+      els.impRangeLabel.textContent = `${formatDateRu(date1)} — ${formatDateRu(date2)}`;
+      els.extraNote.textContent = extraApplied.note;
+
+      els.bannerTableBody.innerHTML = bannerRows.map((row) => {
+        const id = String(row.id);
+        const meta = mergedMeta[id] || {};
+        const name = mergedNames[id] || inferredName(id);
+        const period = (meta.start || meta.end) ? `${formatDateRu(meta.start)} — ${formatDateRu(meta.end)}` : '—';
+        const link = meta.url ? `<a class="link-btn" href="${escapeHtml(meta.url)}" target="_blank" rel="noopener noreferrer">ссылка</a>` : '—';
+        return `
+          <tr>
+            <td class="mono">${escapeHtml(id)}</td>
+            <td>${escapeHtml(name)}</td>
+            <td class="mono">${period}</td>
+            <td>${link}</td>
+            <td class="mono">${humanNumber(row.clicks)}</td>
+            <td class="mono">${humanNumber(row.users)}</td>
+            <td><button class="ghost-btn" data-edit-id="${escapeHtml(id)}">Изменить</button></td>
+          </tr>`;
+      }).join('');
+      els.bannerEmpty.style.display = bannerRows.length ? 'none' : 'block';
+
+      const impRows = filteredImpressions;
+      els.impressionDays.innerHTML = impRows.map((row) => `
+        <div class="imp-day">
+          <div class="d">${formatDateRu(row.date)}</div>
+          <div class="v mono">${humanNumber(row.impressions)}</div>
+        </div>
+      `).join('');
+      els.impressionEmpty.style.display = impRows.length ? 'none' : 'block';
+
+      document.querySelectorAll('[data-edit-id]').forEach((btn) => {
+        btn.addEventListener('click', () => openEditor(btn.getAttribute('data-edit-id')));
+      });
+
+      renderEditorList();
+    }
+
+    function populateMonthSelectors() {
+      const currentYear = new Date().getFullYear();
+      const years = Array.from(new Set([2025, 2026, currentYear])).sort((a,b)=>a-b);
+      els.yearSelect.innerHTML = years.map((year) => `<option value="${year}">${year}</option>`).join('');
+      els.monthSelect.innerHTML = MONTH_NAMES.map((name, idx) => `<option value="${idx+1}">${name}</option>`).join('');
+      els.yearSelect.value = String(currentYear);
+      els.monthSelect.value = String(new Date().getMonth() + 1);
+    }
+
+    function openEditor(id = null) {
+      els.editorOverlay.classList.add('open');
+      if (id) loadEditorRecord(id);
+      else createNewRecord();
+      renderEditorList();
+    }
+    function closeEditor() {
+      els.editorOverlay.classList.remove('open');
+    }
+    function renderEditorList() {
+      const q = (els.editorSearch.value || '').trim().toLowerCase();
+      const names = getMergedNames();
+      const meta = getMergedMeta();
+      const ids = getAllKnownIds().filter((id) => {
+        if (!q) return true;
+        const hay = `${id} ${names[id] || ''} ${meta[id]?.url || ''}`.toLowerCase();
+        return hay.includes(q);
+      });
+      els.editorIdList.innerHTML = ids.map((id) => {
+        const active = String(editorCurrentId || '') === String(id) ? ' active' : '';
+        const label = names[id] || inferredName(id);
+        const metaRow = meta[id] || {};
+        const period = (metaRow.start || metaRow.end) ? `${formatDateRu(metaRow.start)} — ${formatDateRu(metaRow.end)}` : 'Без дат';
+        return `<button class="id-item${active}" data-id="${escapeHtml(id)}">
+          <div><strong>ID ${escapeHtml(id)}</strong> — ${escapeHtml(label)}</div>
+          <div class="small">${escapeHtml(period)}</div>
+        </button>`;
+      }).join('');
+      els.editorIdList.querySelectorAll('[data-id]').forEach((btn) => {
+        btn.addEventListener('click', () => loadEditorRecord(btn.getAttribute('data-id')));
+      });
+    }
+    function loadEditorRecord(id) {
+      const names = getMergedNames();
+      const meta = getMergedMeta();
+      const row = meta[String(id)] || {};
+      editorCurrentId = String(id);
+      els.editId.value = id;
+      els.editName.value = names[String(id)] || '';
+      els.editStart.value = row.start || '';
+      els.editEnd.value = row.end || '';
+      els.editUrl.value = row.url || '';
+      els.editorInfo.textContent = `Редактируется ID ${id}. ${overridesStatus}`;
+      renderEditorList();
+    }
+    function createNewRecord() {
+      editorCurrentId = null;
+      els.editId.value = '';
+      els.editName.value = '';
+      els.editStart.value = '';
+      els.editEnd.value = '';
+      els.editUrl.value = '';
+      els.editorInfo.textContent = `Создание новой записи. Введите ID и нажмите «Сохранить». ${overridesStatus}`;
+      renderEditorList();
+    }
+    async function saveCurrentRecord() {
+      const id = String(els.editId.value || '').trim();
+      if (!id) {
+        alert('Укажите ID.');
+        return;
+      }
+      const payload = {
+        action: 'upsert',
+        id,
+        name: els.editName.value.trim() || null,
+        url: els.editUrl.value.trim() || null,
+        start: els.editStart.value || null,
+        end: els.editEnd.value || null,
+      };
+      const result = await saveOverridePayload(payload);
+      if (!result.ok) {
+        const local = readLocalOverrides();
+        local.names = local.names || {};
+        local.meta = local.meta || {};
+        if (payload.name) local.names[id] = payload.name;
+        else delete local.names[id];
+        local.meta[id] = { url: payload.url, start: payload.start, end: payload.end };
+        writeLocalOverrides(local);
+        overridesCache = normalizeOverrides(local);
+        overridesMode = 'local';
+        overridesStatus = `Общее сохранение недоступно: ${result.error}. Правка сохранена только в этом браузере.`;
+        alert(`Не удалось сохранить общую правку. Локальная копия сохранена в браузере.
+
+Причина: ${result.error}`);
+      }
+      editorCurrentId = id;
+      render();
+      loadEditorRecord(id);
+    }
+    async function deleteCurrentOverride() {
+      const id = String(els.editId.value || '').trim();
+      if (!id) return;
+      const result = await saveOverridePayload({ action: 'delete', id });
+      if (!result.ok) {
+        const local = readLocalOverrides();
+        if (local.names) delete local.names[id];
+        if (local.meta) delete local.meta[id];
+        writeLocalOverrides(local);
+        overridesCache = normalizeOverrides(local);
+        overridesMode = 'local';
+        overridesStatus = `Общее удаление недоступно: ${result.error}. Правка удалена только в этом браузере.`;
+        alert(`Не удалось удалить общую правку. Локальная копия обновлена в браузере.
+
+Причина: ${result.error}`);
+      }
+      render();
+      loadEditorRecord(id);
+    }
+    function exportOverrides() {
+      const data = normalizeOverrides(getActiveOverrides());
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'pass24-banner-overrides.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+    function importOverrides(file) {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          const parsed = normalizeOverrides(JSON.parse(String(reader.result || '{}')));
+          const result = await saveOverridePayload({ action: 'replace', overrides: parsed });
+          if (!result.ok) {
+            writeLocalOverrides(parsed);
+            overridesCache = parsed;
+            overridesMode = 'local';
+            overridesStatus = `Общий импорт недоступен: ${result.error}. Импорт сохранён только в этом браузере.`;
+            alert(`Не удалось импортировать правки в общий дашборд. Локальная копия сохранена в браузере.
+
+Причина: ${result.error}`);
+          } else {
+            alert('Правки импортированы в общий дашборд.');
+          }
+          render();
+          renderEditorList();
+        } catch (e) {
+          alert('Не удалось прочитать JSON.');
+        }
+      };
+      reader.readAsText(file, 'utf-8');
+    }
+
+    function bindEvents() {
+
+      els.showMonthBtn.addEventListener('click', () => {
+        const year = Number(els.yearSelect.value);
+        const month = Number(els.monthSelect.value);
+        const range = monthRange(year, month);
+        setRange(range.date1, range.date2);
+        fetchData();
+      });
+      els.todayBtn.addEventListener('click', () => {
+        const t = todayLocal();
+        setRange(t, t);
+        fetchData();
+      });
+      els.refreshBtn.addEventListener('click', fetchData);
+      els.dateFrom.addEventListener('change', fetchData);
+      els.dateTo.addEventListener('change', fetchData);
+      els.includeExtra.addEventListener('change', render);
+      els.openEditorBtn.addEventListener('click', () => openEditor());
+      els.closeEditorBtn.addEventListener('click', closeEditor);
+      els.editorOverlay.addEventListener('click', (e) => {
+        if (e.target === els.editorOverlay) closeEditor();
+      });
+      els.editorSearch.addEventListener('input', renderEditorList);
+      els.saveEditBtn.addEventListener('click', saveCurrentRecord);
+      els.deleteOverrideBtn.addEventListener('click', deleteCurrentOverride);
+      els.newEntryBtn.addEventListener('click', createNewRecord);
+      els.exportOverridesBtn.addEventListener('click', exportOverrides);
+      els.importOverridesInput.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (file) importOverrides(file);
+        e.target.value = '';
+      });
+    }
+
+    function startAutoRefresh() {
+      setInterval(fetchData, Number(cfg.autoRefreshMs || 1800000));
+    }
+
+    (async function init() {
+      populateMonthSelectors();
+      const t = todayLocal();
+      setRange(t, t);
+      bindEvents();
+      await loadOverrides();
+      fetchData();
+      startAutoRefresh();
+    })();
+  </script>
+</body>
+</html>

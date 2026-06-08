@@ -2,7 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 const APP_ID = process.env.APPMETRICA_APP_ID || '4626412';
-const TOKEN = process.env.APPMETRICA_TOKEN || '';
+const RAW_TOKEN = process.env.APPMETRICA_TOKEN || '';
+const TOKEN = String(RAW_TOKEN)
+  .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
+  .replace(/^\s*OAuth\s+/i, '')
+  .replace(/^['"]+|['"]+$/g, '')
+  .trim();
 const API_BASE = process.env.APPMETRICA_API_BASE || 'https://api.appmetrica.yandex.ru/stat/v1/data';
 const FALLBACK_PATH = path.join(process.cwd(), 'data', 'fallback.json');
 let fallbackCache = null;
@@ -118,7 +123,7 @@ module.exports = async (req, res) => {
   const date2 = req.query?.date2 || todayIso;
 
   if (!TOKEN) {
-    return res.status(200).json({ ...readFallback(), source: 'fallback', reason: 'APPMETRICA_TOKEN is not configured' });
+    return res.status(200).json({ ...readFallback(), source: 'fallback', reason: 'APPMETRICA_TOKEN is not configured or empty after sanitization' });
   }
 
   try {

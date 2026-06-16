@@ -392,6 +392,76 @@
       font-size: 12px;
       line-height: 1.45;
     }
+
+    .banner-detail-trigger {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      font: inherit;
+      font-weight: 800;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    .banner-detail-trigger:hover { color: #1d4ed8; }
+    .detail-modal {
+      width: min(980px, 100%);
+      max-height: min(92vh, 900px);
+      overflow: hidden;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 30px 70px rgba(15,23,42,.22);
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+    }
+    .detail-body {
+      padding: 18px;
+      overflow: auto;
+      min-height: 0;
+    }
+    .detail-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .detail-stat {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: #f8fafc;
+    }
+    .detail-stat .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .detail-stat .value {
+      font-size: 22px;
+      font-weight: 900;
+    }
+    .detail-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      margin: 8px 0 14px;
+    }
+    .detail-table-wrap {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: auto;
+    }
+    .detail-table-wrap table { min-width: 520px; }
+    @media (max-width: 760px) {
+      .detail-summary { grid-template-columns: 1fr; }
+    }
+
     .footnote {
       font-size: 12px;
       color: var(--muted);
@@ -1158,6 +1228,50 @@
     </div>
   </div>
 
+
+  <div class="overlay" id="detailOverlay">
+    <div class="detail-modal">
+      <div class="modal-head">
+        <div>
+          <h3 id="detailTitle">Детализация баннера</h3>
+          <div class="small" id="detailSubtitle" style="color: var(--muted); font-size: 12px; margin-top: 4px;">—</div>
+        </div>
+        <button class="btn" id="closeDetailBtn">Закрыть</button>
+      </div>
+      <div class="detail-body">
+        <div class="detail-summary">
+          <div class="detail-stat">
+            <div class="label">Клики за период</div>
+            <div class="value mono" id="detailClicksTotal">0</div>
+          </div>
+          <div class="detail-stat">
+            <div class="label">Пользователи за период</div>
+            <div class="value mono" id="detailUsersTotal">0</div>
+          </div>
+          <div class="detail-stat">
+            <div class="label">Дней в диапазоне</div>
+            <div class="value mono" id="detailDaysTotal">0</div>
+          </div>
+        </div>
+        <div class="detail-note">
+          Ниже показаны все дни выбранного диапазона. Если в конкретный день у баннера не было событий в AppMetrica, день остаётся в таблице с нулями.
+        </div>
+        <div class="detail-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 180px;">Дата</th>
+                <th style="width: 140px;">Клики</th>
+                <th style="width: 160px;">Пользователи</th>
+              </tr>
+            </thead>
+            <tbody id="detailTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const STORAGE_KEY = 'pass24.bannerOverrides.v1';
     const cfg = window.PASS24_CONFIG || {};
@@ -1200,6 +1314,14 @@
       exportOverridesBtn: document.getElementById('exportOverridesBtn'),
       importOverridesInput: document.getElementById('importOverridesInput'),
       editorInfo: document.getElementById('editorInfo'),
+      detailOverlay: document.getElementById('detailOverlay'),
+      closeDetailBtn: document.getElementById('closeDetailBtn'),
+      detailTitle: document.getElementById('detailTitle'),
+      detailSubtitle: document.getElementById('detailSubtitle'),
+      detailClicksTotal: document.getElementById('detailClicksTotal'),
+      detailUsersTotal: document.getElementById('detailUsersTotal'),
+      detailDaysTotal: document.getElementById('detailDaysTotal'),
+      detailTableBody: document.getElementById('detailTableBody'),
     };
 
     let lastPayload = { bannerDaily: [], impressionsDaily: [], source: 'unknown' };
@@ -1211,6 +1333,28 @@
     }
     function formatDateInput(y, m, d) {
       return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    }
+    function parseIsoDateLocal(iso) {
+      const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (!m) return null;
+      return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    }
+    function addDaysIso(iso, days) {
+      const d = parseIsoDateLocal(iso);
+      if (!d) return '';
+      d.setDate(d.getDate() + Number(days || 0));
+      return formatDateInput(d.getFullYear(), d.getMonth() + 1, d.getDate());
+    }
+    function getDateRangeDays(date1, date2) {
+      const out = [];
+      let cur = date1;
+      let safety = 0;
+      while (cur && cur <= date2 && safety < 2000) {
+        out.push(cur);
+        cur = addDaysIso(cur, 1);
+        safety += 1;
+      }
+      return out;
     }
     function formatDateRu(iso) {
       if (!iso) return '—';
@@ -1448,9 +1592,9 @@
         const period = (meta.start || meta.end) ? `${formatDateRu(meta.start)} — ${formatDateRu(meta.end)}` : '—';
         const link = meta.url ? `<a class="link-btn" href="${escapeHtml(meta.url)}" target="_blank" rel="noopener noreferrer">ссылка</a>` : '—';
         return `
-          <tr>
-            <td class="mono">${escapeHtml(id)}</td>
-            <td>${escapeHtml(name)}</td>
+          <tr data-banner-id="${escapeHtml(id)}">
+            <td class="mono"><button class="banner-detail-trigger mono" data-detail-id="${escapeHtml(id)}" type="button">${escapeHtml(id)}</button></td>
+            <td><button class="banner-detail-trigger" data-detail-id="${escapeHtml(id)}" type="button">${escapeHtml(name)}</button></td>
             <td class="mono">${period}</td>
             <td>${link}</td>
             <td class="mono">${humanNumber(row.clicks)}</td>
@@ -1483,6 +1627,51 @@
       els.monthSelect.innerHTML = MONTH_NAMES.map((name, idx) => `<option value="${idx+1}">${name}</option>`).join('');
       els.yearSelect.value = String(currentYear);
       els.monthSelect.value = String(new Date().getMonth() + 1);
+    }
+
+
+    function openBannerDetail(id) {
+      const bannerId = String(id || '').trim();
+      if (!bannerId) return;
+      const { date1, date2 } = getSelectedRange();
+      const names = getMergedNames();
+      const meta = getMergedMeta();
+      const name = names[bannerId] || inferredName(bannerId);
+      const metaRow = meta[bannerId] || {};
+      const days = getDateRangeDays(date1, date2);
+      const dayMap = new Map();
+      (lastPayload.bannerDaily || []).forEach((row) => {
+        if (String(row.id) !== bannerId) return;
+        if (row.date < date1 || row.date > date2) return;
+        if (!dayMap.has(row.date)) dayMap.set(row.date, { clicks: 0, users: 0 });
+        const item = dayMap.get(row.date);
+        item.clicks += Number(row.clicks || 0);
+        item.users += Number(row.users || 0);
+      });
+      const rows = days.map((date) => {
+        const item = dayMap.get(date) || { clicks: 0, users: 0 };
+        return { date, clicks: item.clicks, users: item.users };
+      });
+      const clicksTotal = rows.reduce((sum, row) => sum + Number(row.clicks || 0), 0);
+      const usersTotal = rows.reduce((sum, row) => sum + Number(row.users || 0), 0);
+      const placement = (metaRow.start || metaRow.end) ? ` · размещение: ${formatDateRu(metaRow.start)} — ${formatDateRu(metaRow.end)}` : '';
+
+      els.detailTitle.textContent = `ID ${bannerId} — ${name}`;
+      els.detailSubtitle.textContent = `${formatDateRu(date1)} — ${formatDateRu(date2)}${placement}`;
+      els.detailClicksTotal.textContent = humanNumber(clicksTotal);
+      els.detailUsersTotal.textContent = humanNumber(usersTotal);
+      els.detailDaysTotal.textContent = humanNumber(rows.length);
+      els.detailTableBody.innerHTML = rows.map((row) => `
+        <tr>
+          <td class="mono">${formatDateRu(row.date)}</td>
+          <td class="mono">${humanNumber(row.clicks)}</td>
+          <td class="mono">${humanNumber(row.users)}</td>
+        </tr>
+      `).join('');
+      els.detailOverlay.classList.add('open');
+    }
+    function closeBannerDetail() {
+      els.detailOverlay.classList.remove('open');
     }
 
     function openEditor(id = null) {
@@ -1646,6 +1835,19 @@
       els.dateFrom.addEventListener('change', fetchData);
       els.dateTo.addEventListener('change', fetchData);
       els.includeExtra.addEventListener('change', render);
+      els.bannerTableBody.addEventListener('click', (e) => {
+        const trigger = e.target.closest('[data-detail-id]');
+        if (!trigger || !els.bannerTableBody.contains(trigger)) return;
+        e.preventDefault();
+        openBannerDetail(trigger.getAttribute('data-detail-id'));
+      });
+      els.closeDetailBtn.addEventListener('click', closeBannerDetail);
+      els.detailOverlay.addEventListener('click', (e) => {
+        if (e.target === els.detailOverlay) closeBannerDetail();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && els.detailOverlay.classList.contains('open')) closeBannerDetail();
+      });
       els.openEditorBtn.addEventListener('click', () => openEditor());
       els.closeEditorBtn.addEventListener('click', closeEditor);
       els.editorOverlay.addEventListener('click', (e) => {

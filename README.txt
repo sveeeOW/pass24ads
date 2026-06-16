@@ -1,3 +1,16 @@
-Vercel version with AppMetrica token sanitization.\n\nChanges:
-- trims APPMETRICA_TOKEN
-- removes accidental OAuth prefix, quotes, CR/LF and control characters\n- keeps the rest of the dashboard unchanged\n
+PASS24 ads dashboard — Vercel version with daily banner detail
+
+Что добавлено:
+- клик по ID или названию баннера открывает детализацию по дням за выбранный период;
+- в детализации показываются все дни диапазона, включая дни с 0 кликов/пользователей;
+- данные берутся из уже загруженного ответа AppMetrica за выбранный период, отдельный запрос на каждый день не нужен;
+- api/appmetrica.js очищает APPMETRICA_TOKEN от скрытых символов;
+- api/banner-meta.js больше не требует BLOB_READ_WRITE_TOKEN жёстко: если токен есть, использует его; если проект подключён к Vercel Blob с OIDC, пытается работать без ручного токена.
+
+Для деплоя:
+1. Замените файлы в GitHub-репозитории содержимым этой папки.
+2. Commit + push в ветку, связанную с Vercel.
+3. Проверьте Environment Variables:
+   APPMETRICA_TOKEN
+   APPMETRICA_APP_ID=4626412
+4. Для общего сохранения правок подключите Vercel Blob к проекту.

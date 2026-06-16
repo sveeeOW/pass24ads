@@ -31,12 +31,14 @@ async function getBlobApi() {
   return import('@vercel/blob');
 }
 
+function getBlobOptions(extra = {}) {
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
+  return token ? { ...extra, token } : extra;
+}
+
 async function readOverrides() {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    throw new Error('BLOB_READ_WRITE_TOKEN is not configured');
-  }
   const { list } = await getBlobApi();
-  const listed = await list({ prefix: KEY, token: process.env.BLOB_READ_WRITE_TOKEN, limit: 10 });
+  const listed = await list(getBlobOptions({ prefix: KEY, limit: 10 }));
   const exact = (listed.blobs || []).find((b) => b.pathname === KEY) || (listed.blobs || [])[0];
   if (!exact) return emptyOverrides();
   const res = await fetch(exact.url, { cache: 'no-store' });
@@ -45,18 +47,14 @@ async function readOverrides() {
 }
 
 async function writeOverrides(overrides) {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    throw new Error('BLOB_READ_WRITE_TOKEN is not configured');
-  }
   const { put } = await getBlobApi();
   const clean = normalizeOverrides(overrides);
-  await put(KEY, JSON.stringify(clean, null, 2), {
+  await put(KEY, JSON.stringify(clean, null, 2), getBlobOptions({
     access: 'public',
     addRandomSuffix: false,
     allowOverwrite: true,
     contentType: 'application/json',
-    token: process.env.BLOB_READ_WRITE_TOKEN,
-  });
+  }));
   return clean;
 }
 

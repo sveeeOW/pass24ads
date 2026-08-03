@@ -7,10 +7,13 @@ module.exports = async (req, res) => {
   const headers = {};
   const capture = {
     statusCode: 200,
-    setHeader(name, value) { headers[name] = value; },
+    setHeader(name, value) { headers[name] = value; return this; },
     getHeader(name) { return headers[name]; },
-    write(chunk) { if (chunk) body += Buffer.isBuffer(chunk) ? chunk.toString('utf8') : String(chunk); },
-    end(chunk) { if (chunk) body += Buffer.isBuffer(chunk) ? chunk.toString('utf8') : String(chunk); }
+    status(code) { this.statusCode = code; return this; },
+    write(chunk) { if (chunk) body += Buffer.isBuffer(chunk) ? chunk.toString('utf8') : String(chunk); return true; },
+    send(chunk) { if (chunk) body += Buffer.isBuffer(chunk) ? chunk.toString('utf8') : String(chunk); return this; },
+    json(obj) { body += JSON.stringify(obj); headers['Content-Type'] = headers['Content-Type'] || 'application/json'; return this; },
+    end(chunk) { if (chunk) body += Buffer.isBuffer(chunk) ? chunk.toString('utf8') : String(chunk); return this; }
   };
   await Promise.resolve(baseHandler(req, capture));
   if (!body) body = '<!DOCTYPE html><meta charset="utf-8"><p>Dashboard renderer returned empty response</p>';
